@@ -30,7 +30,9 @@ int main()
         perror("Alguma thread nao foi criada");
         exit(EXIT_FAILURE);
     }
-    
+    while(true){
+
+    }
    
     exit(0);
 }
@@ -62,7 +64,7 @@ void *thread_receber(void *arg) {
     socklen_t len_recv;
     struct sockaddr_in address;
     // a porta vira do botao 
-    unsigned short porta = 9707;  // o numero do OUTRO GRUPO AQUI
+    unsigned short porta = 9807;  // o numero do OUTRO GRUPO AQUI
     sockfd  = socket(AF_INET, SOCK_DGRAM,0);  // criacao do socket
     
     address.sin_family = AF_INET;
