@@ -64,7 +64,7 @@ void *thread_receber(void *arg) {
     socklen_t len_recv;
     struct sockaddr_in address;
     // a porta vira do botao 
-    unsigned short porta = 9807;  // o numero do OUTRO GRUPO AQUI
+    unsigned short porta = 9801;  // o numero do OUTRO GRUPO AQUI
     sockfd  = socket(AF_INET, SOCK_DGRAM,0);  // criacao do socket
     
     address.sin_family = AF_INET;
@@ -80,8 +80,8 @@ void *thread_receber(void *arg) {
 }
 int proximo(unsigned short n){
 	int aux = (int)n;
-	if(aux>9712){
-		aux=9701;
+	if(aux>9814){
+		aux=9801;
 	}else{
 		aux++;
 	}
