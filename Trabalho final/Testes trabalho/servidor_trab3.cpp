@@ -22,9 +22,21 @@
 
 #define MULTICAST_ADDR "225.0.0.37"
 
+int piso(float n){
+    float divisao;
+    int val;
+    divisao = n/10.0;
+    if(divisao <0.5){
+         val = n;
+    }else{
+        val = n+1;
+    }
+    return val;
+}
 
 int main( )
 {
+    bool vetor[8];
     int server_sockfd, client_sockfd;
     size_t server_len;
     socklen_t client_len;
@@ -40,6 +52,9 @@ int main( )
     {
         printf(" Houve erro na ebertura do socket ");
         exit(1);
+    }
+    for(int i=0;i<8;i++){
+        vetor[i]= false;
     }
     server_address.sin_family = AF_INET;
     server_address.sin_addr.s_addr = htonl(INADDR_ANY);
@@ -82,6 +97,7 @@ int main( )
             exit(1);
         }
         printf(" Valor recebido foi = %.2f e %.2f\n", valor[0], valor[1]);
+
         // close(server_sockfd);
         
     }
