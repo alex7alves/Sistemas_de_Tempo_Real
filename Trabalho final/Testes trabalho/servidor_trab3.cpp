@@ -18,10 +18,10 @@
 #include <unistd.h>
 #include <unistd.h>
 #include <stdlib.h>
-
+#include <iostream>
+using namespace std;
 
 #define MULTICAST_ADDR "225.0.0.37"
-
 int piso(float n){
     float divisao;
     int val;
@@ -34,9 +34,119 @@ int piso(float n){
     return val;
 }
 
+void Vetorbool(int x, bool *vetor){
+
+  switch(x){
+    case 0:
+        // Leds apagados
+      vetor[0]= true;
+      vetor[1]= true;
+      vetor[2]= true;
+      vetor[3]= true;
+      vetor[4]= true;
+      vetor[5]= true;
+      vetor[6]= true;
+      vetor[7]=  true; 
+      break;
+    case 1:
+      vetor[0]= true;
+      vetor[1]= false;
+      vetor[2]= false;
+      vetor[3]= true;
+      vetor[4]= true;
+      vetor[5]= true;
+      vetor[6]= true;
+      vetor[7]= true;
+      break;  
+    case 2:
+      vetor[0]= false;
+      vetor[1]= false;
+      vetor[2]= true;
+      vetor[3]= false;
+      vetor[4]= false;
+      vetor[5]= true;
+      vetor[6]= false;
+      vetor[7]= true;
+      break;  
+    case 3:
+      vetor[0]= false;
+      vetor[1]= false;
+      vetor[2]= false;
+      vetor[3]= false;
+      vetor[4]= true;
+      vetor[5]= true;
+      vetor[6]= false;
+      vetor[7]= true;
+      break;  
+    case 4:
+       vetor[0]= true;
+      vetor[1]= false;
+      vetor[2]= false;
+      vetor[3]= true;
+      vetor[4]= true;
+      vetor[5]= false;
+      vetor[6]=false;
+      vetor[7]= true;
+      break;  
+    case 5:
+      vetor[0]= false;
+      vetor[1]= true;
+      vetor[2]= false;
+      vetor[3]= false;
+      vetor[4]= true;
+      vetor[5]= false;
+      vetor[6]=false;
+      vetor[7]= true;
+      break;  
+    case 6:
+      vetor[0]= false;
+      vetor[1]= true;
+      vetor[2]= false;
+      vetor[3]= false;
+      vetor[4]= false;
+      vetor[5]= false;
+      vetor[6]=false;
+      vetor[7]= false;
+      break;  
+    case 7:
+       vetor[0]= false;
+      vetor[1]= false;
+      vetor[2]= false;
+      vetor[3]= true;
+      vetor[4]= true;
+      vetor[5]= true;
+      vetor[6]= true;
+      vetor[7]= true;
+      break;    
+    case 8:
+       vetor[0]= false;
+      vetor[1]= false;
+      vetor[2]= false;
+      vetor[3]= false;
+      vetor[4]= false;
+      vetor[5]= false;
+      vetor[6]=false;
+      vetor[7]= true;
+      break;  
+    case 9:
+       vetor[0]= false;
+      vetor[1]= false;
+      vetor[2]= false;
+      vetor[3]= false;
+      vetor[4]= true;
+      vetor[5]= false;
+      vetor[6]=false;
+      vetor[7]= true;
+      break;                          
+  }
+
+}
+
 int main( )
 {
-    bool vetor[8];
+    float media;
+    int retorno;
+    bool *vetor;
     int server_sockfd, client_sockfd;
     size_t server_len;
     socklen_t client_len;
@@ -53,8 +163,10 @@ int main( )
         printf(" Houve erro na ebertura do socket ");
         exit(1);
     }
+    vetor = new bool[8];
     for(int i=0;i<8;i++){
-        vetor[i]= false;
+        vetor[i]= true;
+        cout << vetor[i] << " " << endl;
     }
     server_address.sin_family = AF_INET;
     server_address.sin_addr.s_addr = htonl(INADDR_ANY);
@@ -97,8 +209,11 @@ int main( )
             exit(1);
         }
         printf(" Valor recebido foi = %.2f e %.2f\n", valor[0], valor[1]);
-
+        media = (valor[0]+valor[1])/2;
+        media = media*10;
+        retorno = piso(media);
+        Vetorbool(retorno,vetor);
         // close(server_sockfd);
-        
+        // falta só enviar o vetor
     }
 }
