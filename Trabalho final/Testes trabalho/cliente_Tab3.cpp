@@ -68,11 +68,19 @@ void *thread_receber(void *arg) {
     // a porta vira do botao 
     unsigned short porta = 9707;//9801;  // o numero do OUTRO GRUPO AQUI
     sockfd  = socket(AF_INET, SOCK_DGRAM,0);  // criacao do socket
+    struct ip_mreq mreq;  // para endere�o multicast
+
+    
     
     address.sin_family = AF_INET;
     address.sin_addr.s_addr = inet_addr(MULTICAST_ADDR);
     address.sin_port = htons(porta);
-
+    len_recv = sizeof(address);
+   
+    
+    // use setsockopt() para requerer inscri��o num grupo multicast
+    mreq.imr_multiaddr.s_addr=inet_addr(MULTICAST_ADDR);
+    mreq.imr_interface.s_addr=htonl(INADDR_ANY);
     while(true){
     	cout << " bug bug bug " << endl;
     	//porta = (unsigned short)proximo(porta);

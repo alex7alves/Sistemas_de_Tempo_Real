@@ -209,8 +209,8 @@ int main( )
         retorno = piso(media);
         Vetorbool(retorno,vetor);
         // close(server_sockfd);
-        //sendto(client_sockfd,vetor,sizeof(vetor),0,(struct  sockaddr *) &client_address,sizeof(struct sockaddr));
-        sendto(client_sockfd, vetor,sizeof(vetor),0,(struct sockaddr *) &client_address,client_len);
+        sendto(server_sockfd,vetor,sizeof(vetor),0,(struct  sockaddr *) &client_address,sizeof(struct sockaddr));
+      //  sendto(client_sockfd, vetor,sizeof(vetor),0,(struct sockaddr *) &client_address,client_len);
         cout << " o servidor enviou  ";
         for(int i=0;i<8;i++){
             cout << vetor[i] << " ";
