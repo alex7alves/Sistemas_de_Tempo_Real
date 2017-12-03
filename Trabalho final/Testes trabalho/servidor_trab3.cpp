@@ -38,7 +38,6 @@ void Vetorbool(int x, bool *vetor){
 
   switch(x){
     case 0:
-        // Leds apagados
       vetor[0]= true;
       vetor[1]= true;
       vetor[2]= true;
@@ -79,7 +78,7 @@ void Vetorbool(int x, bool *vetor){
       vetor[7]= true;
       break;  
     case 4:
-       vetor[0]= true;
+      vetor[0]= true;
       vetor[1]= false;
       vetor[2]= false;
       vetor[3]= true;
@@ -109,7 +108,7 @@ void Vetorbool(int x, bool *vetor){
       vetor[7]= false;
       break;  
     case 7:
-       vetor[0]= false;
+      vetor[0]= false;
       vetor[1]= false;
       vetor[2]= false;
       vetor[3]= true;
@@ -119,7 +118,7 @@ void Vetorbool(int x, bool *vetor){
       vetor[7]= true;
       break;    
     case 8:
-       vetor[0]= false;
+      vetor[0]= false;
       vetor[1]= false;
       vetor[2]= false;
       vetor[3]= false;
@@ -164,10 +163,6 @@ int main( )
         exit(1);
     }
     vetor = new bool[8];
-    for(int i=0;i<8;i++){
-        vetor[i]= true;
-        cout << vetor[i] << " " << endl;
-    }
     server_address.sin_family = AF_INET;
     server_address.sin_addr.s_addr = htonl(INADDR_ANY);
     server_address.sin_port = htons(porta);
@@ -214,6 +209,12 @@ int main( )
         retorno = piso(media);
         Vetorbool(retorno,vetor);
         // close(server_sockfd);
-        // falta só enviar o vetor
+        //sendto(client_sockfd,vetor,sizeof(vetor),0,(struct  sockaddr *) &client_address,sizeof(struct sockaddr));
+        sendto(client_sockfd, vetor,sizeof(vetor),0,(struct sockaddr *) &client_address,client_len);
+        cout << " o servidor enviou  ";
+        for(int i=0;i<8;i++){
+            cout << vetor[i] << " ";
+        }
+        cout << endl;
     }
 }

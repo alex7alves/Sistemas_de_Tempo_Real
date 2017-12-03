@@ -8,13 +8,15 @@
 #include <stdlib.h>
 #include <time.h>
 #include <pthread.h>
+#include <iostream>
+using namespace std;
 void *thread_enviar(void *arg);
 void *thread_receber(void *arg);
 int proximo(unsigned short n);
 #define MULTICAST_ADDR "225.0.0.37"
 
 float ADCs[2];
-bool *display[8];
+bool display[8];
 
 int main()
 {
@@ -64,7 +66,7 @@ void *thread_receber(void *arg) {
     socklen_t len_recv;
     struct sockaddr_in address;
     // a porta vira do botao 
-    unsigned short porta = 9801;  // o numero do OUTRO GRUPO AQUI
+    unsigned short porta = 9707;//9801;  // o numero do OUTRO GRUPO AQUI
     sockfd  = socket(AF_INET, SOCK_DGRAM,0);  // criacao do socket
     
     address.sin_family = AF_INET;
@@ -72,10 +74,17 @@ void *thread_receber(void *arg) {
     address.sin_port = htons(porta);
 
     while(true){
+    	cout << " bug bug bug " << endl;
     	//porta = (unsigned short)proximo(porta);
         recvfrom(sockfd, display,sizeof(display),0,(struct sockaddr *) &address,&len_recv);
+        cout << " O cliente recebeu " ;
+    	for(int i=0;i<8;i++){
+        	cout << display[i] << " " ;
+    	}
+    	cout << endl;
         sleep(1);
     }
+    
     close(sockfd);
 }
 int proximo(unsigned short n){
