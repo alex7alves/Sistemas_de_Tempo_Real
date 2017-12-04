@@ -82,7 +82,7 @@ int main(){
             exit(1);
         }
         printf(" Valor recebido foi = %.2f e %.2f\n", valor[0], valor[1]);
-        media = (valor[0]+valor[1])/2;
+        media = (valor[0]+valor[1])/2.0;
         media = media*10;
         cout << "A media foi "<< media << endl;
 
