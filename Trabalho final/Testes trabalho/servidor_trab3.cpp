@@ -27,7 +27,7 @@ int piso(float n){
     int val;
     divisao = n/10.0;
     if(divisao <=0.5){
-         val = n-0.5;
+         val = n;
     }else{
         val = n+1;
     }
