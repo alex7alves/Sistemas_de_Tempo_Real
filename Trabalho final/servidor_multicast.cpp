@@ -84,15 +84,11 @@ int main(){
         printf(" Valor recebido foi = %.2f e %.2f\n", valor[0], valor[1]);
         media = (valor[0]+valor[1])/2;
         media = media*10;
+        cout << "A media foi "<< media << endl;
+
         retorno = piso(media);
-
+        cout << " Retorno foi "<< retorno << endl;
         Vetorbool(retorno,vetor);
-
-        for(int i=0;i<8;i++){
-            cout << vetor[i] << " ";
-        }
-        cout << endl;
-
         sendto(server_sockfd, vetor, sizeof(vetor), 0, (struct sockaddr *) &recebedor_address, recebedor_len);
         cout << " o servidor enviou  ";
         for(int i=0;i<8;i++){
@@ -102,10 +98,8 @@ int main(){
     }
 }
 int piso(float n){
-    float divisao;
     int val;
-    divisao = n/10.0;
-    if(divisao <0.5){
+    if(divisao <=0.5){
          val = n;
     }else{
         val = n+1;
