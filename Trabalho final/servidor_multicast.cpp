@@ -1,15 +1,4 @@
-//
-//  servidor_multicast.cpp
-//  str
-//
-//  Created by Affonso on 18/05/16.
-//  Copyright © 2016 Affonso. All rights reserved.
-//
 
-// #include "servidor_multicast.hpp"
-
-// programa servidor_multicast.cpp - Servidor que lê e escreve em um vetor de caracter
-// Protocolo UDP
 
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -36,7 +25,7 @@ int main(){
     
     struct ip_mreq mreq;  // para endere�o multicast
 
-    unsigned short enviador_porta = 9707, recebedor_porta = 9801;
+    unsigned short enviador_porta = 9708, recebedor_porta = 9808;
 
     unlink("server_socket");  // remocao de socket antigo
     if ( (server_sockfd = socket(AF_INET, SOCK_DGRAM, 0) )  < 0  ){ //Cria um novo socket
