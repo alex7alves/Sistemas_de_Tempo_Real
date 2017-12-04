@@ -26,12 +26,13 @@ int piso(float n){
     float divisao;
     int val;
     divisao = n/10.0;
-    if(divisao <0.5){
-         val = n;
+    if(divisao <=0.5){
+         val = n-0.5;
     }else{
         val = n+1;
     }
     return val;
+    
 }
 
 void Vetorbool(int x, bool *vetor){
@@ -207,11 +208,12 @@ int main( )
         media = (valor[0]+valor[1])/2;
         media = media*10;
         retorno = piso(media);
+        cout << " o valor do val foi " << retorno << endl;
         Vetorbool(retorno,vetor);
         // close(server_sockfd);
         sendto(server_sockfd,vetor,sizeof(vetor),0,(struct  sockaddr *) &client_address,sizeof(struct sockaddr));
       //  sendto(client_sockfd, vetor,sizeof(vetor),0,(struct sockaddr *) &client_address,client_len);
-        cout << " o servidor enviou  ";
+        cout << " o servidor enviou  " ;
         for(int i=0;i<8;i++){
             cout << vetor[i] << " ";
         }
