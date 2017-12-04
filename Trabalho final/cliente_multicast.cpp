@@ -16,7 +16,7 @@ using namespace BlackLib;
 void *thread_enviar(void *arg);
 void *thread_receber(void *arg);
 int proximo(unsigned short n);
-void display(int z);
+void Display(int z);
 #define MULTICAST_ADDR "225.0.0.37"
 
 // Criando aqui pra nao dar problema ao passar pras threads
@@ -72,6 +72,12 @@ void *thread_enviar(void *arg) {
         // pega os valores aqui do adc
         ADCs[0] = adc1.getFloatValue();
         ADCs[1] = adc2.getFloatValue();
+        if(ADCs[0]>1){
+            ADCs[0]=1;
+        }
+        if(ADCs[1]>1){
+            ADCs[1]=1;
+        }
         sendto(sockfd, ADCs, sizeof(ADCs), 0, (struct sockaddr *) &address, len);
         sleep(1);
     }
@@ -133,7 +139,7 @@ void *thread_receber(void *arg) {
         for(int i=0;i<7;i++){ // descarta o ultimo - led do ponto
             prodisplay= prodisplay + (int)display[i] ;
         }
-        display(prodisplay);
+        Display(prodisplay);
         std::cout <<" o valor pro display eh " << prodisplay << endl;
         sleep(1);
     }
@@ -152,7 +158,7 @@ int proximo(unsigned short n){
 }
 
 
-void display(int z){
+void Display(int z){
   switch(z){
     case 0:
       a.setValue(low);
