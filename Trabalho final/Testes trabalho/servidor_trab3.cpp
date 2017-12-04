@@ -26,13 +26,13 @@ int piso(float n){
     float divisao;
     int val;
     divisao = n/10.0;
-    if(divisao <=0.5){
+    if(divisao <0.5){
          val = n;
     }else{
         val = n+1;
     }
+
     return val;
-    
 }
 
 void Vetorbool(int x, bool *vetor){
@@ -46,7 +46,7 @@ void Vetorbool(int x, bool *vetor){
       vetor[4]= true;
       vetor[5]= true;
       vetor[6]= true;
-      vetor[7]=  true; 
+      vetor[7]= true; 
       break;
     case 1:
       vetor[0]= true;
@@ -85,7 +85,7 @@ void Vetorbool(int x, bool *vetor){
       vetor[3]= true;
       vetor[4]= true;
       vetor[5]= false;
-      vetor[6]=false;
+      vetor[6]= false;
       vetor[7]= true;
       break;  
     case 5:
@@ -95,7 +95,7 @@ void Vetorbool(int x, bool *vetor){
       vetor[3]= false;
       vetor[4]= true;
       vetor[5]= false;
-      vetor[6]=false;
+      vetor[6]= false;
       vetor[7]= true;
       break;  
     case 6:
@@ -105,7 +105,7 @@ void Vetorbool(int x, bool *vetor){
       vetor[3]= false;
       vetor[4]= false;
       vetor[5]= false;
-      vetor[6]=false;
+      vetor[6]= false;
       vetor[7]= false;
       break;  
     case 7:
@@ -125,59 +125,63 @@ void Vetorbool(int x, bool *vetor){
       vetor[3]= false;
       vetor[4]= false;
       vetor[5]= false;
-      vetor[6]=false;
+      vetor[6]= false;
       vetor[7]= true;
       break;  
     case 9:
-       vetor[0]= false;
+      vetor[0]= false;
       vetor[1]= false;
       vetor[2]= false;
       vetor[3]= false;
       vetor[4]= true;
       vetor[5]= false;
-      vetor[6]=false;
+      vetor[6]= false;
       vetor[7]= true;
       break;                          
   }
 
 }
 
-int main( )
-{
+int main(){
+
     float media;
     int retorno;
-    bool *vetor;
-    int server_sockfd, client_sockfd;
-    size_t server_len;
-    socklen_t client_len;
-    struct sockaddr_in server_address;
-    struct sockaddr_in client_address;
+    bool *vetor = new bool[8];
+    int server_sockfd;
+    u_int yes=1;
+    struct sockaddr_in enviador_address, recebedor_address;
+    socklen_t enviador_len = sizeof(enviador_address), recebedor_len = sizeof(recebedor_address);
     
     struct ip_mreq mreq;  // para endere�o multicast
-    
-    unsigned short porta = 9707;
-    
+
+    unsigned short enviador_porta = 9707, recebedor_porta = 9807;
+
     unlink("server_socket");  // remocao de socket antigo
-    if ( (server_sockfd = socket(AF_INET, SOCK_DGRAM, 0) )  < 0  )  // cria um novo socket
-    {
+    if ( (server_sockfd = socket(AF_INET, SOCK_DGRAM, 0) )  < 0  ){ //Cria um novo socket
         printf(" Houve erro na ebertura do socket ");
         exit(1);
     }
-    vetor = new bool[8];
-    server_address.sin_family = AF_INET;
-    server_address.sin_addr.s_addr = htonl(INADDR_ANY);
-    server_address.sin_port = htons(porta);
-    
-    
-    server_len = sizeof(server_address);
-    
-    if(  bind(server_sockfd, (struct sockaddr *) &server_address, server_len) < 0 )
-    {
-        perror("Houve error no Bind");
+
+    if (setsockopt(server_sockfd, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(yes))<0){ //Cria um novo socket
+        printf(" Houve erro ao reusar o ADDR ");
         exit(1);
     }
-    
-    
+
+//    vetor = new bool[8];
+
+    enviador_address.sin_family = AF_INET;
+    enviador_address.sin_addr.s_addr = inet_addr(MULTICAST_ADDR);
+    enviador_address.sin_port = htons(enviador_porta);
+
+    recebedor_address.sin_family = AF_INET;
+    recebedor_address.sin_addr.s_addr = htonl(INADDR_ANY);
+    recebedor_address.sin_port = htons(recebedor_porta);
+
+    if(bind(server_sockfd, (struct sockaddr *) &enviador_address, enviador_len) < 0){
+        perror("Houve error no Bind com o enviador");
+        exit(1);
+    }
+
     // use setsockopt() para requerer inscri��o num grupo multicast
     mreq.imr_multiaddr.s_addr=inet_addr(MULTICAST_ADDR);
     mreq.imr_interface.s_addr=htonl(INADDR_ANY);
@@ -185,22 +189,14 @@ int main( )
         perror("setsockopt");
         exit(1);
     }
-    printf(" IPPROTO_IP = %d\n", IPPROTO_IP);
-    printf(" SOL_SOCKET = %d\n", SOL_SOCKET);
-    printf(" IP_ADD_MEMBERSHIP = %d \n", IP_ADD_MEMBERSHIP);
-    float valor[2];
-    valor[0]=0;
-    valor[1]=1;
-    
+
+    float valor[2] = {0, 1};
+  
     while(1){
-        
-        
+
         printf("Servidor esperando ...\n");
-        
-        client_len = sizeof(client_address);
-        if(recvfrom(server_sockfd, &valor, sizeof(valor),0,
-                    (struct sockaddr *) &client_address, &client_len) < 0 )
-        {
+
+        if(recvfrom(server_sockfd, &valor, sizeof(valor), 0, (struct sockaddr *) &enviador_address, &enviador_len) < 0 ){
             perror(" erro no RECVFROM( )");
             exit(1);
         }
@@ -208,12 +204,16 @@ int main( )
         media = (valor[0]+valor[1])/2;
         media = media*10;
         retorno = piso(media);
-        cout << " o valor do val foi " << retorno << endl;
+
         Vetorbool(retorno,vetor);
-        // close(server_sockfd);
-        sendto(server_sockfd,vetor,sizeof(vetor),0,(struct  sockaddr *) &client_address,sizeof(struct sockaddr));
-      //  sendto(client_sockfd, vetor,sizeof(vetor),0,(struct sockaddr *) &client_address,client_len);
-        cout << " o servidor enviou  " ;
+
+        for(int i=0;i<8;i++){
+            cout << vetor[i] << " ";
+        }
+        cout << endl;
+
+        sendto(server_sockfd, vetor, sizeof(vetor), 0, (struct sockaddr *) &recebedor_address, recebedor_len);
+        cout << " o servidor enviou  ";
         for(int i=0;i<8;i++){
             cout << vetor[i] << " ";
         }
