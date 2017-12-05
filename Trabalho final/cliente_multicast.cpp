@@ -21,7 +21,7 @@ void Display(int z);
 
 // Criando aqui pra nao dar problema ao passar pras threads
 float ADCs[2];//={0, 1};
-bool display[8;//]={true, true, true, true, false, false, false, false};
+bool display[8];//]={true, true, true, true, false, false, false, false};
 // portas digitais pro display 
 BlackGPIO a(GPIO_67, output);
 BlackGPIO b(GPIO_68, output);
