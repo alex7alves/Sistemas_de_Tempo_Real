@@ -53,8 +53,8 @@ void *thread_enviar(void *arg) {
     len = sizeof(address);
     while(true){
         // pega os valores aqui do adc
-        ADCs[0] = 0.2;
-        ADCs[1] = 0.2;
+        ADCs[0] = 0.7;
+        ADCs[1] = 0.4;
         sendto(sockfd, ADCs, sizeof(ADCs), 0, (struct sockaddr *) &address, len);
         sleep(1);
     }
