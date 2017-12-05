@@ -43,7 +43,7 @@ void *thread_enviar(void *arg) {
     int sockfd;
     int len;
     struct sockaddr_in address;
-    unsigned short porta = 9707;  // o numero do nosso grupo aqui
+    unsigned short porta = 9708;  // o numero do nosso grupo aqui
     sockfd  = socket(AF_INET, SOCK_DGRAM, 0);  // criacao do socket
     
     address.sin_family = AF_INET;
@@ -78,7 +78,7 @@ void *thread_receber(void *arg) {
     struct ip_mreq mreq;
     int prodisplay;
     // a porta vira do botao 
-    unsigned short porta = 9807;//9801;  // o numero do OUTRO GRUPO AQUI
+    unsigned short porta = 9808;//9801;  // o numero do OUTRO GRUPO AQUI
 
     unlink("server_socket");  // remocao de socket antigo
     if ( (sockfd = socket(AF_INET, SOCK_DGRAM, 0) )  < 0  ){ //Cria um novo socket
