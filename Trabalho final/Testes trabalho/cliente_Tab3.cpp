@@ -51,12 +51,21 @@ void *thread_enviar(void *arg) {
     address.sin_port = htons(porta);
     
     len = sizeof(address);
+    ADCs[0] = 0.1;
+    ADCs[1] = 0.3;
     while(true){
         // pega os valores aqui do adc
-        ADCs[0] = 0.7;
-        ADCs[1] = 0.4;
+        
         sendto(sockfd, ADCs, sizeof(ADCs), 0, (struct sockaddr *) &address, len);
         sleep(1);
+        ADCs[0]= ADCs[0] +0.2;
+        ADCs[1]= ADCs[1] +0.1;
+        if(ADCs[0]>1){
+            ADCs[0]=0.1;
+        }
+        if(ADCs[1]>1){
+            ADCs[1]=0.2;
+        }
     }
     close(sockfd);
 }
