@@ -87,13 +87,17 @@ int main(){
     }
 }
 int piso(float n){
+    float divisao;
     int val;
+    divisao = n/10.0;
     if(divisao <=0.5){
          val = n;
     }else{
         val = n+1;
     }
-
+    if(val>8){
+      val=8;
+    }
     return val;
 }
 
@@ -101,67 +105,27 @@ void Vetorbool(int x, bool *vetor){
 
   switch(x){
     case 0:
-      vetor[0]= true;
-      vetor[1]= true;
-      vetor[2]= true;
-      vetor[3]= true;
-      vetor[4]= true;
-      vetor[5]= true;
-      vetor[6]= true;
-      vetor[7]= true; 
+      vetor[0]= false;
+      vetor[1]= false;
+      vetor[2]= false;
+      vetor[3]= false;
+      vetor[4]= false;
+      vetor[5]= false;
+      vetor[6]= false;
+      vetor[7]= false; 
       break;
     case 1:
       vetor[0]= true;
       vetor[1]= false;
       vetor[2]= false;
-      vetor[3]= true;
-      vetor[4]= true;
-      vetor[5]= true;
-      vetor[6]= true;
-      vetor[7]= true;
-      break;  
-    case 2:
-      vetor[0]= false;
-      vetor[1]= false;
-      vetor[2]= true;
       vetor[3]= false;
       vetor[4]= false;
-      vetor[5]= true;
+      vetor[5]= false;
       vetor[6]= false;
-      vetor[7]= true;
+      vetor[7]= false;
       break;  
-    case 3:
-      vetor[0]= false;
-      vetor[1]= false;
-      vetor[2]= false;
-      vetor[3]= false;
-      vetor[4]= true;
-      vetor[5]= true;
-      vetor[6]= false;
-      vetor[7]= true;
-      break;  
-    case 4:
+    case 2:
       vetor[0]= true;
-      vetor[1]= false;
-      vetor[2]= false;
-      vetor[3]= true;
-      vetor[4]= true;
-      vetor[5]= false;
-      vetor[6]= false;
-      vetor[7]= true;
-      break;  
-    case 5:
-      vetor[0]= false;
-      vetor[1]= true;
-      vetor[2]= false;
-      vetor[3]= false;
-      vetor[4]= true;
-      vetor[5]= false;
-      vetor[6]= false;
-      vetor[7]= true;
-      break;  
-    case 6:
-      vetor[0]= false;
       vetor[1]= true;
       vetor[2]= false;
       vetor[3]= false;
@@ -170,36 +134,68 @@ void Vetorbool(int x, bool *vetor){
       vetor[6]= false;
       vetor[7]= false;
       break;  
+    case 3:
+      vetor[0]= true;
+      vetor[1]= true;
+      vetor[2]= true;
+      vetor[3]= false;
+      vetor[4]= false;
+      vetor[5]= false;
+      vetor[6]= false;
+      vetor[7]= false;
+      break;  
+    case 4:
+      vetor[0]= true;
+      vetor[1]= true;
+      vetor[2]= true;
+      vetor[3]= true;
+      vetor[4]= false;
+      vetor[5]= false;
+      vetor[6]= false;
+      vetor[7]= false;
+      break;  
+    case 5:
+      vetor[0]= true;
+      vetor[1]= true;
+      vetor[2]= true;
+      vetor[3]= true;
+      vetor[4]= true;
+      vetor[5]= false;
+      vetor[6]= false;
+      vetor[7]= false;
+      break;  
+    case 6:
+      vetor[0]= true;
+      vetor[1]= true;
+      vetor[2]= true;
+      vetor[3]= true;
+      vetor[4]= true;
+      vetor[5]= true;
+      vetor[6]= false;
+      vetor[7]= false;
+      break;  
     case 7:
-      vetor[0]= false;
-      vetor[1]= false;
-      vetor[2]= false;
+      vetor[0]= true;
+      vetor[1]= true;
+      vetor[2]= true;
+      vetor[3]= true;
+      vetor[4]= true;
+      vetor[5]= true;
+      vetor[6]= true;
+      vetor[7]= false;
+      break;    
+    case 8:
+      vetor[0]=true ;
+      vetor[0]= true;
+      vetor[1]= true;
+      vetor[2]= true;
       vetor[3]= true;
       vetor[4]= true;
       vetor[5]= true;
       vetor[6]= true;
       vetor[7]= true;
-      break;    
-    case 8:
-      vetor[0]= false;
-      vetor[1]= false;
-      vetor[2]= false;
-      vetor[3]= false;
-      vetor[4]= false;
-      vetor[5]= false;
-      vetor[6]= false;
-      vetor[7]= true;
       break;  
-    case 9:
-      vetor[0]= false;
-      vetor[1]= false;
-      vetor[2]= false;
-      vetor[3]= false;
-      vetor[4]= true;
-      vetor[5]= false;
-      vetor[6]= false;
-      vetor[7]= true;
-      break;                          
+                            
   }
 
 }

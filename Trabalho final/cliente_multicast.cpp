@@ -15,13 +15,13 @@
 using namespace BlackLib;
 void *thread_enviar(void *arg);
 void *thread_receber(void *arg);
-int proximo(unsigned short n);
+int proximo(int *aux);
 void Display(int z);
 #define MULTICAST_ADDR "225.0.0.37"
 
 // Criando aqui pra nao dar problema ao passar pras threads
 float ADCs[2];//={0, 1};
-bool display[8]={true, true, true, true, false, false, false, false};
+bool display[8;//]={true, true, true, true, false, false, false, false};
 // portas digitais pro display 
 BlackGPIO a(GPIO_67, output);
 BlackGPIO b(GPIO_68, output);
@@ -37,12 +37,10 @@ ADC adc2(AIN5);
 int bot;
 
 int main(){
-    
-    int result;
+
     int res,res2;
     pthread_t thread_envia,thread_recebe;
-    void *thread_result;
-
+    
     res = pthread_create(&thread_envia, NULL, thread_enviar,NULL);
     res2 = pthread_create(&thread_recebe, NULL, thread_receber,NULL);
     if (res != 0 || res2 != 0) {
@@ -51,6 +49,7 @@ int main(){
     }
     while(true){
          std::cout<<" valor do adc1 eh "<< ADCs[0]<<" e adc2 eh " << ADCs[1] << endl;
+         sleep(2);
     }
    
     exit(0);
@@ -60,7 +59,7 @@ void *thread_enviar(void *arg) {
     int sockfd;
     int len;
     struct sockaddr_in address;
-    unsigned short porta = 9707;  // o numero do nosso grupo aqui
+    unsigned short porta = 9708;  
     sockfd  = socket(AF_INET, SOCK_DGRAM, 0);  // criacao do socket
     
     address.sin_family = AF_INET;
@@ -78,6 +77,16 @@ void *thread_enviar(void *arg) {
         if(ADCs[1]>1){
             ADCs[1]=1;
         }
+        bot=botao.getNumericValue();
+        if(bot){
+           // porta = (unsigned short)proximo(porta);
+            porta ++;
+            if(porta>9713){
+                porta=9701;
+                std::cout << " Enviando pra porta "<< porta << endl;
+            }
+        }
+       
         sendto(sockfd, ADCs, sizeof(ADCs), 0, (struct sockaddr *) &address, len);
         sleep(1);
     }
@@ -92,7 +101,7 @@ void *thread_receber(void *arg) {
     struct ip_mreq mreq;
     int prodisplay;
     // a porta vira do botao 
-    unsigned short porta = 9801;//9801;  // o numero do OUTRO GRUPO AQUI
+    unsigned short porta = 9808;//9801;  // o numero do OUTRO GRUPO AQUI
 
     unlink("server_socket");  // remocao de socket antigo
     if ( (sockfd = socket(AF_INET, SOCK_DGRAM, 0) )  < 0  ){ //Cria um novo socket
@@ -126,9 +135,14 @@ void *thread_receber(void *arg) {
     while(true){
         bot=botao.getNumericValue();
         if(bot){
-            porta = (unsigned short)proximo(porta);
+           // porta = (unsigned short)proximo(porta);
+            porta ++;
+            if(porta>9813){
+                porta=9801;
+                std::cout << " Escultando da porta "<< porta << endl;
+            }
         }
-        std::cout << " Escultando da porta "<< porta << endl;
+
         recvfrom(sockfd, &display, sizeof(display), 0, (struct sockaddr *) &address, &len_recv);
         std::cout << " O cliente recebeu " ;
         for(int i=0;i<8;i++){ 
@@ -147,14 +161,11 @@ void *thread_receber(void *arg) {
     close(sockfd);
 
 }
-int proximo(unsigned short n){
-    int aux = (int)n;
-    if(aux>9814){
-        aux=9801;
-    }else{
-        aux++;
+int proximo(int *aux){
+    if(*aux>13){
+        *aux=1;
     }
-    return aux;
+    return *aux;
 }
 
 
