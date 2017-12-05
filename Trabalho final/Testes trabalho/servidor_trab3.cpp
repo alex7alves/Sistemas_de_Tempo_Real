@@ -209,7 +209,7 @@ int main(){
         Vetorbool(retorno,vetor);
         cout << " o retorno foi " << retorno << endl;
 
-        sendto(sockfd, vetor,sizeof(*vetor),0,(struct sockaddr *) &address, len);
+        sendto(sockfd, vetor,sizeof(vetor),0,(struct sockaddr *) &address, len);
         cout << " o servidor enviou  ";
         for(int i=0;i<8;i++){
             cout << vetor[i] << " ";
