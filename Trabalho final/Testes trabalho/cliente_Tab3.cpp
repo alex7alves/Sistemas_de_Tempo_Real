@@ -118,7 +118,7 @@ void *thread_receber(void *arg) {
     	}
     	cout << endl;
         prodisplay=0;
-        for(int i=0;i<7;i++){ // descarta o ultimo - led do ponto
+        for(int i=0;i<8;i++){ 
             prodisplay= prodisplay + (int)display[i] ;
         }
         cout <<" o valor pro display eh " << prodisplay << endl;
