@@ -107,16 +107,14 @@ void *thread_receber(void *arg) {
         printf(" Houve erro na ebertura do socket ");
         exit(1);
     }
-
-    if (setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(yes))<0){ //Cria um novo socket
-        printf(" Houve erro ao reusar o ADDR ");
-        exit(1);
-    }
-
     address.sin_family = AF_INET;
     address.sin_addr.s_addr = htonl(INADDR_ANY);
     address.sin_port = htons(porta);
     len_recv = sizeof(address);
+    if (setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(yes))<0){ //Cria um novo socket
+        printf(" Houve erro ao reusar o ADDR ");
+        exit(1);
+    }
 
     if(bind(sockfd, (struct sockaddr *) &address, len_recv) < 0){
         perror("Houve error no Bind com o recebedor");
