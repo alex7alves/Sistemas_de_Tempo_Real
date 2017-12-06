@@ -48,8 +48,7 @@ int main(){
         exit(EXIT_FAILURE);
     }
     while(true){
-         std::cout<<" valor do adc1 eh "<< ADCs[0]<<" e adc2 eh " << ADCs[1] << endl;
-         sleep(2);
+
     }
    
     exit(0);
@@ -139,10 +138,10 @@ void *thread_receber(void *arg) {
             porta ++;
             if(porta>9813){
                 porta=9801;
-                std::cout << " Escultando da porta "<< porta << endl;
+               
             }
         }
-
+        std::cout << " Escultando da porta "<< porta << endl;
         recvfrom(sockfd, &display, sizeof(display), 0, (struct sockaddr *) &address, &len_recv);
         std::cout << " O cliente recebeu " ;
         for(int i=0;i<8;i++){ 
@@ -150,8 +149,8 @@ void *thread_receber(void *arg) {
         }
         std::cout << endl;
         prodisplay=0;
-        for(int i=0;i<7;i++){ // descarta o ultimo - led do ponto
-            prodisplay= prodisplay + (int)display[i] ;
+        for(int i=0;i<8;i++){ 
+            prodisplay= prodisplay + (int)display[i];
         }
         Display(prodisplay);
         std::cout <<" o valor pro display eh " << prodisplay << endl;
